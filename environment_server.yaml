@@ -1,0 +1,9 @@
+name: dask-gateway
+channels:
+ - conda-forge
+dependencies:
+ - python=3.11
+ - go  # needed to build dask-gateway-server 
+ - pip
+ - pip:
+   - git+https://github.com/fnattino/dask-gateway@run-as-user#egg=dask-gateway-server[jobqueue]&subdirectory=dask-gateway-server 
