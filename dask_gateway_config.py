@@ -1,3 +1,5 @@
+import socket 
+
 
 # Configure the gateway to use SLURM
 c.DaskGateway.backend_class = (
@@ -9,8 +11,9 @@ c.DaskGateway.log_level = 'DEBUG'
 c.SlurmClusterConfig.scheduler_setup = "source ~/mambaforge/bin/activate ~/mambaforge/envs/dask"
 c.SlurmClusterConfig.worker_setup = "source ~/mambaforge/bin/activate ~/mambaforge/envs/dask"
 
-# Configuration of the proxy is needed in order to reach the 
-c.Proxy.address = 'ui-02:8000'
+# Configuration of the proxy is needed for the scheduler and workers to reach the gateway server
+host, *_ = socket.gethostname().split('.')
+c.Proxy.address = f'{host}:8000'
 
 # System specific
 c.SlurmClusterConfig.partition = 'normal'
